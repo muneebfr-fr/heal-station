@@ -676,9 +676,9 @@ function IntentSection() {
               paddingLeft: 28,
             }}
           >
-            "We are not trying to be the biggest supplement brand. We are trying to be the
+            &ldquo;We are not trying to be the biggest supplement brand. We are trying to be the
             one you trust enough to take every single day, because you have read exactly what
-            is in it and exactly why."
+            is in it and exactly why.&rdquo;
           </blockquote>
 
           <GlassEffect
