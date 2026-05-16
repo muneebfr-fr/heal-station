@@ -7,6 +7,7 @@ export default function Capsule3D() {
 
   useEffect(() => {
     if (!mountRef.current) return;
+    const mountEl = mountRef.current;
 
     let animFrameId;
     let renderer, controls;
@@ -17,11 +18,10 @@ export default function Capsule3D() {
         "three/examples/jsm/controls/OrbitControls.js"
       );
 
-      const el = mountRef.current;
-      if (!el) return;
+      if (!mountEl) return;
 
-      const width = el.clientWidth || 500;
-      const height = el.clientHeight || 600;
+      const width = mountEl.clientWidth || 500;
+      const height = mountEl.clientHeight || 600;
 
       // Renderer
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -29,7 +29,7 @@ export default function Capsule3D() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.1;
-      el.appendChild(renderer.domElement);
+      mountEl.appendChild(renderer.domElement);
 
       // Scene
       const scene = new THREE.Scene();
@@ -68,22 +68,31 @@ export default function Capsule3D() {
         envMapIntensity: 1.1,
       });
 
-      // "HEAL STATION" bump texture
+      // "HEAL STATION" engraving — high-contrast canvas bump map
       const bumpCanvas = document.createElement("canvas");
-      bumpCanvas.width = 512;
-      bumpCanvas.height = 128;
+      bumpCanvas.width = 1024;
+      bumpCanvas.height = 256;
       const bCtx = bumpCanvas.getContext("2d");
-      bCtx.fillStyle = "#808080";
-      bCtx.fillRect(0, 0, 512, 128);
+      // Dark base = no bump, white text = raised surface (engraved effect with negative scale)
+      bCtx.fillStyle = "#1a1a1a";
+      bCtx.fillRect(0, 0, 1024, 256);
       bCtx.fillStyle = "#ffffff";
-      bCtx.font = "700 22px 'DM Mono', 'Courier New', monospace";
+      bCtx.font = "bold 52px 'Courier New', monospace";
       bCtx.textAlign = "center";
       bCtx.textBaseline = "middle";
-      bCtx.fillText("HEAL  STATION", 256, 64);
+      // Letter spacing via individual char placement
+      const text = "HEAL  STATION";
+      let x = 512 - ((text.length - 1) * 28) / 2;
+      for (const ch of text) {
+        bCtx.fillText(ch, x, 128);
+        x += 28;
+      }
       const bumpTex = new THREE.CanvasTexture(bumpCanvas);
+      bumpTex.wrapS = THREE.RepeatWrapping;
+      bumpTex.wrapT = THREE.RepeatWrapping;
 
       darkTeal.bumpMap = bumpTex;
-      darkTeal.bumpScale = 0.015;
+      darkTeal.bumpScale = -0.06;
 
       // Capsule group
       const capsule = new THREE.Group();
@@ -202,9 +211,9 @@ export default function Capsule3D() {
       animate();
 
       const handleResize = () => {
-        if (!mountRef.current) return;
-        const w = mountRef.current.clientWidth || 500;
-        const h = mountRef.current.clientHeight || 600;
+        if (!mountEl) return;
+        const w = mountEl.clientWidth || 500;
+        const h = mountEl.clientHeight || 600;
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
@@ -223,9 +232,8 @@ export default function Capsule3D() {
       if (controls) controls.dispose();
       if (renderer) {
         renderer.dispose();
-        const el = mountRef.current;
-        if (el && renderer.domElement.parentNode === el) {
-          el.removeChild(renderer.domElement);
+        if (mountEl && renderer.domElement.parentNode === mountEl) {
+          mountEl.removeChild(renderer.domElement);
         }
       }
     };
