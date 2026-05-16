@@ -59,9 +59,40 @@ export default function Capsule3D() {
         controls.enabled = false;
       }
 
-      // Materials
+      // Helper — draws HEAL STATION text onto a canvas and returns a THREE texture
+      function makeEngravingTex(bgHex, textHex) {
+        const c = document.createElement("canvas");
+        c.width = 2048; c.height = 512;
+        const cx = c.getContext("2d");
+        cx.fillStyle = bgHex;
+        cx.fillRect(0, 0, 2048, 512);
+        cx.fillStyle = textHex;
+        cx.font = "900 110px 'Arial Black', 'Courier New', monospace";
+        cx.textAlign = "center";
+        cx.textBaseline = "middle";
+        cx.letterSpacing = "12px";
+        cx.fillText("HEAL  STATION", 1024, 256);
+        const t = new THREE.CanvasTexture(c);
+        t.wrapS = THREE.RepeatWrapping;
+        t.wrapT = THREE.RepeatWrapping;
+        return t;
+      }
+
+      // Bump map (pure black/white — drives depth, shared)
+      const bumpTex = makeEngravingTex("#000000", "#ffffff");
+
+      // Color maps: text painted as contrasting tint directly on the surface
+      // Dark half → lighter text so it reads against the deep teal
+      const darkColorTex = makeEngravingTex("#004346", "#7dd4e8");
+      // Light half → darker text so it reads against the sky teal
+      const lightColorTex = makeEngravingTex("#5DA8C4", "#002830");
+
+      // Materials — color driven by map, material.color set to white so map pixels are unmodified
       const darkTeal = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color("#004346"),
+        color: new THREE.Color("#ffffff"),
+        map: darkColorTex,
+        bumpMap: bumpTex,
+        bumpScale: 0.5,
         clearcoat: 1.0,
         clearcoatRoughness: 0.08,
         roughness: 0.22,
@@ -70,36 +101,16 @@ export default function Capsule3D() {
       });
 
       const lightTeal = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color("#5DA8C4"),
+        color: new THREE.Color("#ffffff"),
+        map: lightColorTex,
+        bumpMap: bumpTex,
+        bumpScale: -0.5,
         clearcoat: 0.9,
         clearcoatRoughness: 0.1,
         roughness: 0.28,
         metalness: 0.08,
         envMapIntensity: 1.1,
       });
-
-      // "HEAL STATION" engraving — large canvas for sharp bump map
-      const bumpCanvas = document.createElement("canvas");
-      bumpCanvas.width = 2048;
-      bumpCanvas.height = 512;
-      const bCtx = bumpCanvas.getContext("2d");
-      bCtx.fillStyle = "#000000";
-      bCtx.fillRect(0, 0, 2048, 512);
-      bCtx.fillStyle = "#ffffff";
-      bCtx.font = "900 110px 'Arial Black', 'Courier New', monospace";
-      bCtx.textAlign = "center";
-      bCtx.textBaseline = "middle";
-      bCtx.letterSpacing = "12px";
-      bCtx.fillText("HEAL  STATION", 1024, 256);
-      const bumpTex = new THREE.CanvasTexture(bumpCanvas);
-      bumpTex.wrapS = THREE.RepeatWrapping;
-      bumpTex.wrapT = THREE.RepeatWrapping;
-
-      darkTeal.bumpMap = bumpTex;
-      darkTeal.bumpScale = 0.5;
-
-      lightTeal.bumpMap = bumpTex;
-      lightTeal.bumpScale = -0.5;
 
       // Capsule group
       const capsule = new THREE.Group();
