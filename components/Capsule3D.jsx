@@ -96,7 +96,7 @@ export default function Capsule3D() {
       bumpTex.wrapT = THREE.RepeatWrapping;
 
       darkTeal.bumpMap = bumpTex;
-      darkTeal.bumpScale = -0.5;
+      darkTeal.bumpScale = 0.5;
 
       lightTeal.bumpMap = bumpTex;
       lightTeal.bumpScale = -0.5;
