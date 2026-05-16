@@ -397,6 +397,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.8, duration: 0.8 }}
+              className="hero-chip"
               style={{
                 position: "absolute",
                 bottom: "12%",
@@ -448,6 +449,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 2.0, duration: 0.8 }}
+              className="hero-chip"
               style={{
                 position: "absolute",
                 top: "14%",
@@ -530,15 +532,27 @@ export default function HeroSection() {
         @media (max-width: 768px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            padding-top: 32px;
-            padding-bottom: 40px;
+            gap: 0 !important;
+            padding-top: 24px !important;
+            padding-bottom: 48px !important;
+            min-height: 100svh !important;
+            align-content: center;
           }
+          .hero-left {
+            order: 1 !important;
+            text-align: center !important;
+          }
+          .hero-left p { margin-inline: auto; }
+          .hero-left > div:nth-child(1) { justify-content: center; }
+          .hero-left > div:nth-child(4) { justify-content: center; }
+          .hero-left > div:nth-child(5) { justify-content: center; }
           .hero-right {
-            order: -1;
+            order: 2 !important;
           }
           .hero-right > div {
-            height: clamp(300px, 45vw, 380px) !important;
+            height: clamp(260px, 55vw, 340px) !important;
           }
+          .hero-chip { display: none !important; }
         }
       `}</style>
     </section>

@@ -226,6 +226,17 @@ body::after {
 ::-webkit-scrollbar-track { background: var(--bg-base); }
 ::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 3px; }
 
+/* ─── Mobile tokens ──────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --navbar-h:      60px;
+    --section-py:    clamp(48px, 12vw, 80px);
+    --container-px:  20px;
+    --text-hero:     clamp(48px, 13vw, 68px);
+    --text-h2:       clamp(26px, 8vw, 38px);
+  }
+}
+
 /* ─── Responsive helpers ─────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }

@@ -6,6 +6,8 @@ import { GlassEffect } from "@/components/ui/liquid-glass";
 
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
+  const [tapped, setTapped] = useState(false);
+  const showGlass = hovered || tapped;
 
   const waMessage = encodeURIComponent(
     `Hi! I'd like to order ${product.name} (${product.price}). Please confirm availability.`
@@ -23,9 +25,10 @@ export default function ProductCard({ product }) {
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onClick={() => setTapped((t) => !t)}
         style={{
           background: "var(--bg-surface)",
-          border: `1px solid ${hovered ? product.color + "55" : "var(--border-subtle)"}`,
+          border: `1px solid ${showGlass ? product.color + "55" : "var(--border-subtle)"}`,
           borderRadius: "var(--radius-card)",
           overflow: "hidden",
           height: "100%",
@@ -33,10 +36,10 @@ export default function ProductCard({ product }) {
           flexDirection: "column",
           cursor: "default",
           transition: "box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease",
-          boxShadow: hovered
+          boxShadow: showGlass
             ? `0 20px 60px ${product.colorDark}22, 0 8px 24px rgba(0,0,0,0.08)`
             : "var(--shadow-card)",
-          transform: hovered ? "translateY(-8px)" : "translateY(0)",
+          transform: showGlass ? "translateY(-8px)" : "translateY(0)",
           position: "relative",
         }}
       >
@@ -46,7 +49,7 @@ export default function ProductCard({ product }) {
             position: "absolute",
             inset: 0,
             background: `radial-gradient(ellipse 80% 60% at 50% -10%, ${product.colorAccent}60, transparent 65%)`,
-            opacity: hovered ? 1 : 0,
+            opacity: showGlass ? 1 : 0,
             transition: "opacity 0.4s ease",
             pointerEvents: "none",
             zIndex: 0,
@@ -73,7 +76,7 @@ export default function ProductCard({ product }) {
               inset: 0,
               backgroundImage: `radial-gradient(${product.colorDark}15 1px, transparent 1px)`,
               backgroundSize: "20px 20px",
-              opacity: hovered ? 1 : 0,
+              opacity: showGlass ? 1 : 0,
               transition: "opacity 0.4s ease",
             }}
           />
@@ -113,7 +116,7 @@ export default function ProductCard({ product }) {
 
           {/* Glass composition panel — slides up on hover */}
           <AnimatePresence>
-            {hovered && (
+            {showGlass && (
               <motion.div
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -312,7 +315,7 @@ export default function ProductCard({ product }) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 7,
-                background: hovered ? "#1DA851" : product.colorDark,
+                background: showGlass ? "#1DA851" : product.colorDark,
                 color: "white",
                 borderRadius: 999,
                 padding: "10px 20px",
@@ -323,7 +326,7 @@ export default function ProductCard({ product }) {
                 transition: "all 0.28s ease",
                 letterSpacing: "0.03em",
                 flexShrink: 0,
-                boxShadow: hovered ? "0 6px 20px rgba(29,168,81,0.35)" : "none",
+                boxShadow: showGlass ? "0 6px 20px rgba(29,168,81,0.35)" : "none",
               }}
             >
               <WhatsAppIcon />
