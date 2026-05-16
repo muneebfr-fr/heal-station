@@ -198,11 +198,15 @@ export default function SciencePage() {
             }}
           >
             We chose the most bioavailable form of each active. We verified every batch to USP
-            standards. We wrote out the mechanism so you understand exactly what you are taking
-            and why.
+            pharmaceutical standards and registered every product with DRAP — Pakistan&apos;s national
+            drug authority. We wrote out the mechanism so you understand exactly what you are
+            taking and why.
           </motion.p>
         </div>
       </div>
+
+      {/* DRAP Section */}
+      <DRAPSection />
 
       {/* Science sections */}
       {SCIENCE_SECTIONS.map((section, sIdx) => (
@@ -212,8 +216,354 @@ export default function SciencePage() {
       {/* USP Standards section */}
       <UspSection />
 
+      {/* Why We're Better */}
+      <WhyWereBetterSection />
+
       {/* Bioavailability comparison final CTA */}
       <FinalCTA />
+    </div>
+  );
+}
+
+function DRAPSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        background: "linear-gradient(160deg, #0A1A1F 0%, #0D2028 50%, #172A3A 100%)",
+        padding: "96px var(--container-px)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Grid texture */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "radial-gradient(rgba(116,179,206,0.04) 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+          pointerEvents: "none",
+        }}
+      />
+      {/* Glow */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "-20%",
+          right: "-10%",
+          width: 600,
+          height: 600,
+          borderRadius: "50%",
+          background: "radial-gradient(ellipse, rgba(80,137,145,0.1) 0%, transparent 65%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ maxWidth: 1280, marginInline: "auto", position: "relative" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 80,
+            alignItems: "center",
+          }}
+          className="drap-grid"
+        >
+          {/* Left: Badge + headline */}
+          <motion.div
+            initial={{ opacity: 0, x: -32 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* DRAP Badge */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 12,
+                padding: "10px 20px 10px 12px",
+                borderRadius: 999,
+                border: "1px solid rgba(116,179,206,0.3)",
+                background: "rgba(116,179,206,0.08)",
+                marginBottom: 32,
+              }}
+            >
+              <div
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  background: "rgba(116,179,206,0.15)",
+                  border: "1px solid rgba(116,179,206,0.4)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="#74B3CE" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </div>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 10,
+                  letterSpacing: "0.25em",
+                  textTransform: "uppercase",
+                  color: "#74B3CE",
+                }}
+              >
+                DRAP Registered
+              </span>
+            </div>
+
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(28px, 4vw, 48px)",
+                fontWeight: 400,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.05,
+                color: "white",
+                marginBottom: 20,
+              }}
+            >
+              Pakistan&apos;s drug authority{" "}
+              <em style={{ fontStyle: "italic", color: "#74B3CE" }}>reviewed this.</em>
+            </h2>
+
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 15,
+                color: "rgba(255,255,255,0.55)",
+                lineHeight: 1.8,
+                maxWidth: 460,
+              }}
+            >
+              DRAP — the Drug Regulatory Authority of Pakistan — is the country&apos;s equivalent of
+              the US FDA. Registration is not a checkbox. It means a formal review of formulation,
+              manufacturing standards, labelling accuracy, and ingredient safety before a product
+              is permitted to enter the market.
+            </p>
+          </motion.div>
+
+          {/* Right: Three contrast points */}
+          <motion.div
+            initial={{ opacity: 0, x: 32 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            style={{ display: "flex", flexDirection: "column", gap: 20 }}
+          >
+            {[
+              {
+                num: "01",
+                title: "Most supplements in Pakistan are unregistered",
+                body: "The majority of supplements sold locally are grey-market imports — no quality verification, no regulatory review, no legal accountability. The label says what the seller decided to print.",
+              },
+              {
+                num: "02",
+                title: "DRAP registration is a legal requirement for pharmaceutical-grade products",
+                body: "When a product carries a DRAP registration number, the label is legally accountable. Ingredient claims, dosages, and manufacturing conditions have been reviewed by the national authority.",
+              },
+              {
+                num: "03",
+                title: "We chose compliance over convenience",
+                body: "Registration takes time and cost. We did it anyway — because a product you cannot trust is not a product at all.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.num}
+                initial={{ opacity: 0, y: 16 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.75, delay: 0.3 + i * 0.12 }}
+                style={{
+                  padding: "24px 28px",
+                  borderRadius: 16,
+                  border: "1px solid rgba(116,179,206,0.12)",
+                  background: "rgba(255,255,255,0.03)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9,
+                    letterSpacing: "0.2em",
+                    color: "rgba(116,179,206,0.5)",
+                    marginBottom: 10,
+                  }}
+                >
+                  {item.num}
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "rgba(255,255,255,0.85)",
+                    marginBottom: 8,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {item.title}
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 12,
+                    color: "rgba(255,255,255,0.42)",
+                    lineHeight: 1.75,
+                  }}
+                >
+                  {item.body}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .drap-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function WhyWereBetterSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const paragraphs = [
+    {
+      heading: "The Pakistan supplement market has a compliance problem",
+      body: "Walk into any pharmacy or scroll any health page in Pakistan and you will find shelves stacked with supplements — most of them unregistered imports with no quality verification, cheap ingredient forms chosen for margin rather than mechanism, and proprietary blends designed specifically to obscure how little active ingredient is actually in the bottle. There is no oversight enforcing otherwise. Brands make the claims, print the label, and move on. The consumer has no way to know what they are actually swallowing.",
+    },
+    {
+      heading: "Most people feel nothing because the product is wrong, not the nutrient",
+      body: "When a supplement does not work, the instinct is to conclude the nutrient is overhyped. That is rarely true. Magnesium oxide has a 4% absorption rate. Oral glutathione degrades almost entirely before reaching the bloodstream. Vitamin D without K2 cannot direct calcium where the body needs it. The science behind these nutrients is solid — it is the form, the dose, and the delivery that fails. Undertherapeutic doses, degraded imports sitting in uncontrolled warehouses, cheap inorganic compounds that the gut cannot meaningfully absorb — these are the real reasons people feel nothing. The nutrient is not the problem. The product is.",
+    },
+    {
+      heading: "How we built around each failure point",
+      body: "Heal Station started from the failure modes. Every formula uses the bioavailable form of each active — bisglycinate not oxide, L-glutathione paired with ALA, MK-7 not MK-4. Every batch is verified to USP pharmaceutical standards: identity, potency, purity, dissolution. Every product is DRAP registered, which means Pakistan&apos;s national drug authority has reviewed the formulation before it reached you. The doses match the clinical research — not trace amounts used to justify a marketing claim, but the quantities that produce the outcomes studies actually measured. The label says what is inside. That is not a boast. It should be a baseline. In Pakistan&apos;s supplement market, it is not.",
+    },
+    {
+      heading: "Pakistani consumers deserve the same standard as anyone else",
+      body: "Consumers in the US and Europe have regulatory frameworks that enforce minimum quality standards. A supplement sold in those markets without registration, without verifiable potency, without transparent labelling, would not stay on the shelf. Pakistani consumers deserve exactly the same. Not a localised, lower-quality version of a product — the actual standard, applied with the same rigour. That is the only version of this brand we were willing to build.",
+    },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        background: "var(--bg-base)",
+        padding: "100px var(--container-px)",
+      }}
+    >
+      <div style={{ maxWidth: 1280, marginInline: "auto" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.85 }}
+          style={{ marginBottom: 64 }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "var(--mid)",
+              marginBottom: 14,
+            }}
+          >
+            The Standard
+          </p>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "var(--text-h2)",
+              fontWeight: 400,
+              letterSpacing: "-0.02em",
+              color: "var(--text-primary)",
+              marginBottom: 0,
+              lineHeight: 1.05,
+              maxWidth: 640,
+            }}
+          >
+            Why the bar is{" "}
+            <em style={{ fontStyle: "italic", color: "var(--mid)" }}>set this high</em>
+          </h2>
+        </motion.div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "48px 80px",
+          }}
+          className="why-grid"
+        >
+          {paragraphs.map((p, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 28 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: i * 0.12 }}
+            >
+              <div
+                style={{
+                  width: 32,
+                  height: 2,
+                  background: "var(--mid)",
+                  borderRadius: 1,
+                  marginBottom: 20,
+                  opacity: 0.5,
+                }}
+              />
+              <h3
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(17px, 1.8vw, 22px)",
+                  fontWeight: 500,
+                  letterSpacing: "-0.015em",
+                  color: "var(--text-primary)",
+                  lineHeight: 1.25,
+                  marginBottom: 14,
+                }}
+              >
+                {p.heading}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 14,
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.85,
+                }}
+              >
+                {p.body}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .why-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+      `}</style>
     </div>
   );
 }
@@ -699,8 +1049,7 @@ function FinalCTA() {
             marginBottom: 36,
           }}
         >
-          The mechanism is explained. The dose is validated. The standard is USP.
-          The only thing left is to try it.
+          DRAP registered. USP grade. Clinically dosed. The only thing left is to try it.
         </p>
         <a
           href="/shop"

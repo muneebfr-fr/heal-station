@@ -6,17 +6,22 @@ const VALUE_PROPS = [
   {
     icon: <BioIcon />,
     title: "Bioavailability First",
-    body: "We choose the chelated, methylated, and liposomal forms — the forms your cells actually absorb. Not the cheapest, the most effective.",
+    body: "Cheap ingredient forms are the supplement industry's oldest trick — oxide instead of bisglycinate, inorganic selenium instead of selenomethionine, forms the gut cannot meaningfully absorb. We start with the form that works. Chelated, methylated, paired with synergistic cofactors. Not the least expensive option — the most effective one.",
   },
   {
     icon: <GradeIcon />,
     title: "USP Pharmaceutical Grade",
-    body: "Every active ingredient meets United States Pharmacopeia standards for purity and potency. The same standard hospitals use.",
+    body: "Every active ingredient meets United States Pharmacopeia standards for identity, potency, purity, and dissolution. This is the standard hospitals and clinical trials use. It means what is on the label is what is in the capsule — verified by independent testing, not the manufacturer's word.",
   },
   {
     icon: <DoseIcon />,
     title: "Clinically Dosed",
-    body: "Quantities that match clinical research, not the trace amounts used to justify marketing claims. What you see on the label is what does the work.",
+    body: "Most supplements include a nutrient at a fraction of the researched dose — enough to print it on the label, not enough to do anything. Our doses match the quantities used in the clinical studies we cite. The mechanism only works at the right concentration. We do not cut corners on the number that matters most.",
+  },
+  {
+    icon: <DRAPIcon />,
+    title: "DRAP Registered",
+    body: "DRAP — the Drug Regulatory Authority of Pakistan — is Pakistan's equivalent of the US FDA. Registering with DRAP means our formulations have been formally reviewed and approved by the national drug authority before reaching you. Most supplements sold in Pakistan never go through this process. We did, because accountability is not optional.",
   },
 ];
 
@@ -122,7 +127,13 @@ export default function ScienceStory() {
               marginBottom: 48,
             }}
           >
-            Most supplements fill capsules with the cheapest form of an ingredient. We do the opposite — starting with the form that works, then building around it. No fillers, no proprietary blends hiding behind marketing.
+            Pakistan&apos;s supplement market is largely unregulated. Most products are unregistered
+            grey-market imports — cheap ingredient forms, undertherapeutic doses, proprietary
+            blends designed to obscure what little active ingredient is actually inside. When
+            supplements do not work, people blame the nutrient. The real problem is almost always
+            the product. We built Heal Station to fix that: starting with the form that absorbs,
+            dosing to match the clinical evidence, and registering every product with DRAP before
+            it reaches you.
           </p>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
@@ -290,6 +301,17 @@ function DoseIcon() {
     <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
       <path d="M9 3h6M8 3l-5 13a2 2 0 0 0 1.84 2.76h14.32A2 2 0 0 0 21 16L16 3" />
       <path d="M7.5 14h9" />
+    </svg>
+  );
+}
+
+function DRAPIcon() {
+  return (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+      <rect x={3} y={3} width={18} height={18} rx={3} />
+      <path d="M7 8h4a2 2 0 0 1 0 4H7V8z" />
+      <path d="M7 12h5l3 4" />
+      <path d="M15 8h2" />
     </svg>
   );
 }
