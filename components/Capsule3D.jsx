@@ -104,6 +104,9 @@ export default function Capsule3D() {
       darkTeal.bumpMap = bumpTex;
       darkTeal.bumpScale = -0.06;
 
+      lightTeal.bumpMap = bumpTex;
+      lightTeal.bumpScale = -0.06;
+
       // Capsule group
       const capsule = new THREE.Group();
 
