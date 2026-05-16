@@ -78,34 +78,28 @@ export default function Capsule3D() {
         envMapIntensity: 1.1,
       });
 
-      // "HEAL STATION" engraving — high-contrast canvas bump map
+      // "HEAL STATION" engraving — large canvas for sharp bump map
       const bumpCanvas = document.createElement("canvas");
-      bumpCanvas.width = 1024;
-      bumpCanvas.height = 256;
+      bumpCanvas.width = 2048;
+      bumpCanvas.height = 512;
       const bCtx = bumpCanvas.getContext("2d");
-      // Dark base = no bump, white text = raised surface (engraved effect with negative scale)
-      bCtx.fillStyle = "#1a1a1a";
-      bCtx.fillRect(0, 0, 1024, 256);
+      bCtx.fillStyle = "#000000";
+      bCtx.fillRect(0, 0, 2048, 512);
       bCtx.fillStyle = "#ffffff";
-      bCtx.font = "bold 52px 'Courier New', monospace";
+      bCtx.font = "900 110px 'Arial Black', 'Courier New', monospace";
       bCtx.textAlign = "center";
       bCtx.textBaseline = "middle";
-      // Letter spacing via individual char placement
-      const text = "HEAL  STATION";
-      let x = 512 - ((text.length - 1) * 28) / 2;
-      for (const ch of text) {
-        bCtx.fillText(ch, x, 128);
-        x += 28;
-      }
+      bCtx.letterSpacing = "12px";
+      bCtx.fillText("HEAL  STATION", 1024, 256);
       const bumpTex = new THREE.CanvasTexture(bumpCanvas);
       bumpTex.wrapS = THREE.RepeatWrapping;
       bumpTex.wrapT = THREE.RepeatWrapping;
 
       darkTeal.bumpMap = bumpTex;
-      darkTeal.bumpScale = -0.06;
+      darkTeal.bumpScale = -0.5;
 
       lightTeal.bumpMap = bumpTex;
-      lightTeal.bumpScale = -0.06;
+      lightTeal.bumpScale = -0.5;
 
       // Capsule group
       const capsule = new THREE.Group();
