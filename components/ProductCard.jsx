@@ -7,12 +7,18 @@ import { GlassEffect } from "@/components/ui/liquid-glass";
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
   const [tapped, setTapped] = useState(false);
+  const [added, setAdded] = useState(false);
   const showGlass = hovered || tapped;
 
   const waMessage = encodeURIComponent(
     `Hi! I'd like to order ${product.name} (${product.price}). Please confirm availability.`
   );
   const waUrl = `https://wa.me/923121428187?text=${waMessage}`;
+
+  function handleAddToCart(e) {
+    e.stopPropagation();
+    setAdded(true);
+  }
 
   return (
     <motion.div
@@ -288,7 +294,7 @@ export default function ProductCard({ product }) {
             {product.description}
           </p>
 
-          {/* Price + CTA */}
+          {/* Price + Add to Cart */}
           <div
             style={{
               display: "flex",
@@ -307,32 +313,127 @@ export default function ProductCard({ product }) {
             >
               {product.price}
             </span>
-            <a
-              href={waUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={handleAddToCart}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 7,
-                background: showGlass ? "#1DA851" : product.colorDark,
+                background: added ? `${product.colorDark}cc` : product.colorDark,
                 color: "white",
+                border: "none",
                 borderRadius: 999,
                 padding: "10px 20px",
                 fontSize: 12,
                 fontFamily: "var(--font-body)",
                 fontWeight: 500,
-                textDecoration: "none",
+                cursor: added ? "default" : "pointer",
                 transition: "all 0.28s ease",
                 letterSpacing: "0.03em",
                 flexShrink: 0,
-                boxShadow: showGlass ? "0 6px 20px rgba(29,168,81,0.35)" : "none",
               }}
             >
-              <WhatsAppIcon />
-              Order Now
-            </a>
+              {added ? (
+                <>
+                  <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                  Added
+                </>
+              ) : (
+                <>
+                  <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <path d="M16 10a4 4 0 01-8 0" />
+                  </svg>
+                  Add to Cart
+                </>
+              )}
+            </button>
           </div>
+
+          {/* Place Order strip — animates in after Add to Cart */}
+          <AnimatePresence>
+            {added && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: "auto", marginTop: 12 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+                style={{ overflow: "hidden" }}
+              >
+                <div
+                  style={{
+                    background: `${product.colorAccent}50`,
+                    border: `1px solid ${product.colorDark}22`,
+                    borderRadius: 14,
+                    padding: "12px 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 10,
+                  }}
+                >
+                  <div>
+                    <p style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "var(--text-secondary)", marginBottom: 1 }}>
+                      Ready to place your order?
+                    </p>
+                    <p style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: product.colorDark, letterSpacing: "0.06em" }}>
+                      {product.name} · {product.price}
+                    </p>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+                    <a
+                      href={waUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                        background: "#1DA851",
+                        color: "white",
+                        borderRadius: 999,
+                        padding: "8px 14px",
+                        fontSize: 11,
+                        fontFamily: "var(--font-body)",
+                        fontWeight: 500,
+                        textDecoration: "none",
+                        letterSpacing: "0.03em",
+                        boxShadow: "0 4px 14px rgba(29,168,81,0.3)",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <WhatsAppIcon />
+                      Place Order
+                    </a>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setAdded(false); }}
+                      style={{
+                        width: 26,
+                        height: 26,
+                        borderRadius: "50%",
+                        background: `${product.colorDark}18`,
+                        border: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        color: "var(--text-muted)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.div>
