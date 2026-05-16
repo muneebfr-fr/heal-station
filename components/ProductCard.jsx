@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassEffect } from "@/components/ui/liquid-glass";
+import { useCart } from "@/context/CartContext";
 
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
   const [tapped, setTapped] = useState(false);
   const [added, setAdded] = useState(false);
   const showGlass = hovered || tapped;
+  const { addItem } = useCart();
 
   const waMessage = encodeURIComponent(
     `Hi! I'd like to order ${product.name} (${product.price}). Please confirm availability.`
@@ -17,6 +19,7 @@ export default function ProductCard({ product }) {
 
   function handleAddToCart(e) {
     e.stopPropagation();
+    addItem(product);
     setAdded(true);
   }
 
