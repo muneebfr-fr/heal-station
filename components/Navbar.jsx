@@ -1,0 +1,279 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { useCart } from "@/context/CartContext";
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { count, setIsOpen } = useCart();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <>
+      <motion.nav
+        animate={{
+          background: scrolled ? "rgba(240,250,250,0.88)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px) saturate(1.4)" : "none",
+          borderBottom: scrolled
+            ? "1px solid rgba(0,67,70,0.08)"
+            : "1px solid transparent",
+          boxShadow: scrolled ? "0 1px 24px rgba(23,42,58,0.06)" : "none",
+        }}
+        transition={{ duration: 0.3 }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 50,
+          height: "var(--navbar-h)",
+          display: "flex",
+          alignItems: "center",
+          paddingInline: "var(--container-px)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1280,
+            marginInline: "auto",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Logo */}
+          <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <HealStationLogo />
+          </Link>
+
+          {/* Desktop nav */}
+          <nav className="hide-mobile" style={{ display: "flex", gap: 40 }}>
+            {["Shop", "Science", "About"].map((link) => (
+              <Link
+                key={link}
+                href={`/${link.toLowerCase()}`}
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "var(--text-secondary)",
+                  letterSpacing: "0.04em",
+                  position: "relative",
+                  paddingBottom: 2,
+                }}
+                className="nav-link"
+              >
+                {link}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right side */}
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            {/* Cart */}
+            <button
+              onClick={() => setIsOpen(true)}
+              style={{
+                position: "relative",
+                width: 40,
+                height: 40,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                border: "1.5px solid var(--border-subtle)",
+                background: "var(--bg-surface)",
+                color: "var(--text-primary)",
+                transition: "all 0.2s ease",
+              }}
+            >
+              <CartIcon />
+              {count > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  style={{
+                    position: "absolute",
+                    top: -4,
+                    right: -4,
+                    width: 18,
+                    height: 18,
+                    borderRadius: "50%",
+                    background: "var(--primary)",
+                    color: "white",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "var(--font-mono)",
+                  }}
+                >
+                  {count}
+                </motion.span>
+              )}
+            </button>
+
+            {/* Mobile menu toggle */}
+            <button
+              className="hide-desktop"
+              onClick={() => setMenuOpen(!menuOpen)}
+              style={{
+                width: 40,
+                height: 40,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 5,
+              }}
+            >
+              <motion.span
+                animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 7 : 0 }}
+                style={{ display: "block", width: 22, height: 1.5, background: "var(--primary)", transformOrigin: "center", borderRadius: 2 }}
+              />
+              <motion.span
+                animate={{ opacity: menuOpen ? 0 : 1 }}
+                style={{ display: "block", width: 22, height: 1.5, background: "var(--primary)", borderRadius: 2 }}
+              />
+              <motion.span
+                animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? -7 : 0 }}
+                style={{ display: "block", width: 22, height: 1.5, background: "var(--primary)", transformOrigin: "center", borderRadius: 2 }}
+              />
+            </button>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "fixed",
+              top: "var(--navbar-h)",
+              left: 0,
+              right: 0,
+              background: "var(--bg-surface)",
+              borderBottom: "1px solid var(--border-subtle)",
+              zIndex: 49,
+              padding: "24px var(--container-px)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+            }}
+          >
+            {["Shop", "Science", "About"].map((link, i) => (
+              <motion.div
+                key={link}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <Link
+                  href={`/${link.toLowerCase()}`}
+                  onClick={() => setMenuOpen(false)}
+                  style={{
+                    display: "block",
+                    padding: "12px 0",
+                    fontFamily: "var(--font-display)",
+                    fontSize: 22,
+                    fontWeight: 400,
+                    color: "var(--text-primary)",
+                    borderBottom: "1px solid var(--border-subtle)",
+                  }}
+                >
+                  {link}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <style>{`
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -2px; left: 0; right: 0;
+          height: 1.5px;
+          background: var(--primary);
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.3s var(--ease-out);
+        }
+        .nav-link:hover { color: var(--primary) !important; }
+        .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+      `}</style>
+    </>
+  );
+}
+
+function HealStationLogo() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      {/* Liquid-morph icon mark */}
+      <div style={{ position: "relative", width: 34, height: 34 }}>
+        <div
+          style={{
+            width: 34,
+            height: 34,
+            background: "linear-gradient(135deg, var(--primary) 0%, var(--mid) 100%)",
+            animation: "liquid-morph 6s ease-in-out infinite",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 2L12 7M12 17L12 22M2 12L7 12M17 12L22 12"
+              stroke="white"
+              strokeWidth={2}
+              strokeLinecap="round"
+            />
+            <circle cx={12} cy={12} r={3} fill="white" />
+          </svg>
+        </div>
+      </div>
+      {/* Wordmark */}
+      <div>
+        <span
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: 17,
+            fontWeight: 500,
+            color: "var(--primary)",
+            letterSpacing: "-0.01em",
+            lineHeight: 1,
+          }}
+        >
+          Heal Station
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  );
+}
