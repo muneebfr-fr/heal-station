@@ -31,6 +31,13 @@ export default function Capsule3D() {
       renderer.toneMappingExposure = 1.1;
       mountEl.appendChild(renderer.domElement);
 
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+      // On mobile let touch scroll the page — disable canvas pointer capture
+      if (isMobile) {
+        renderer.domElement.style.touchAction = "pan-y";
+      }
+
       // Scene
       const scene = new THREE.Scene();
 
@@ -38,7 +45,7 @@ export default function Capsule3D() {
       const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
       camera.position.set(0, 0, 4.5);
 
-      // OrbitControls
+      // OrbitControls — disabled on mobile so touch scrolls the page
       controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.04;
@@ -48,6 +55,9 @@ export default function Capsule3D() {
       controls.enablePan = false;
       controls.minPolarAngle = Math.PI * 0.3;
       controls.maxPolarAngle = Math.PI * 0.72;
+      if (isMobile) {
+        controls.enabled = false;
+      }
 
       // Materials
       const darkTeal = new THREE.MeshPhysicalMaterial({
