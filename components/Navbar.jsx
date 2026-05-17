@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
@@ -225,29 +226,33 @@ export default function Navbar() {
 function HealStationLogo() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      {/* Liquid-morph icon mark */}
-      <div style={{ position: "relative", width: 34, height: 34 }}>
-        <div
+      {/* Liquid-morph logo mark — image cropped to the cross icon */}
+      <div
+        style={{
+          width: 38,
+          height: 38,
+          borderRadius: "56% 44% 48% 52% / 52% 44% 56% 48%",
+          animation: "liquid-morph 6s ease-in-out infinite",
+          overflow: "hidden",
+          flexShrink: 0,
+          boxShadow: "0 2px 12px rgba(0,67,70,0.18)",
+        }}
+      >
+        <Image
+          src="/logo.png"
+          alt="Heal Station"
+          width={76}
+          height={76}
           style={{
-            width: 34,
-            height: 34,
-            background: "linear-gradient(135deg, var(--primary) 0%, var(--mid) 100%)",
-            animation: "liquid-morph 6s ease-in-out infinite",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            width: "200%",
+            height: "200%",
+            objectFit: "cover",
+            objectPosition: "50% 22%",
+            marginLeft: "-50%",
+            marginTop: "-8%",
           }}
-        >
-          <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 2L12 7M12 17L12 22M2 12L7 12M17 12L22 12"
-              stroke="white"
-              strokeWidth={2}
-              strokeLinecap="round"
-            />
-            <circle cx={12} cy={12} r={3} fill="white" />
-          </svg>
-        </div>
+          priority
+        />
       </div>
       {/* Wordmark */}
       <div>
