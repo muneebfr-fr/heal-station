@@ -226,7 +226,7 @@ export default function Navbar() {
 function HealStationLogo() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      {/* Liquid-morph logo mark — image cropped to the cross icon */}
+      {/* Liquid-morph logo mark — image zoomed & clipped to the cross icon */}
       <div
         style={{
           width: 38,
@@ -235,21 +235,22 @@ function HealStationLogo() {
           animation: "liquid-morph 6s ease-in-out infinite",
           overflow: "hidden",
           flexShrink: 0,
+          position: "relative",
           boxShadow: "0 2px 12px rgba(0,67,70,0.18)",
         }}
       >
         <Image
           src="/logo.png"
           alt="Heal Station"
-          width={76}
-          height={76}
+          width={120}
+          height={120}
           style={{
-            width: "200%",
-            height: "200%",
-            objectFit: "cover",
-            objectPosition: "50% 22%",
-            marginLeft: "-50%",
-            marginTop: "-8%",
+            position: "absolute",
+            width: "auto",
+            height: "260%",
+            top: "-10%",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
           priority
         />
