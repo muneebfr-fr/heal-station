@@ -159,13 +159,52 @@ export default function CartDrawer() {
 
                 {/* Checkout CTA */}
                 <button
-                  className="btn btn-primary"
-                  style={{ width: "100%", justifyContent: "center", padding: "14px 24px" }}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    position: "relative",
+                    background: "rgba(0,67,70,0.13)",
+                    backdropFilter: "blur(20px) saturate(1.7)",
+                    WebkitBackdropFilter: "blur(20px) saturate(1.7)",
+                    border: "1px solid rgba(255,255,255,0.48)",
+                    borderRadius: 999,
+                    padding: "14px 24px",
+                    color: "var(--primary)",
+                    fontFamily: "var(--font-body)",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    letterSpacing: "0.04em",
+                    cursor: "pointer",
+                    boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.68), inset 0 -1px 0 rgba(0,67,70,0.10), 0 4px 20px rgba(0,67,70,0.16)",
+                    overflow: "hidden",
+                    transition: "all 0.22s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(0,67,70,0.20)";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(0,67,70,0.13)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
                 >
-                  Proceed to Checkout
-                  <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
+                  <span style={{
+                    position: "absolute", inset: 0, pointerEvents: "none",
+                    background: "linear-gradient(105deg, transparent 28%, rgba(255,255,255,0.52) 50%, transparent 72%)",
+                    backgroundSize: "200% 100%",
+                    backgroundPosition: "-200% 0",
+                    animation: "glass-shimmer 3.2s ease infinite",
+                    borderRadius: "inherit",
+                  }} />
+                  <span style={{ position: "relative", display: "flex", alignItems: "center", gap: 8 }}>
+                    Proceed to Checkout
+                    <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </span>
                 </button>
               </div>
             )}
