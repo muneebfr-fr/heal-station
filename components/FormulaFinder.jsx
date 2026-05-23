@@ -766,7 +766,7 @@ export function FloatingFormulaButton() {
               position: "absolute",
               inset: -6,
               borderRadius: 999,
-              border: "2px solid var(--primary)",
+              border: "1.5px solid rgba(155,143,198,0.55)",
               animation: "pulse-ring 2.5s ease-out infinite",
               pointerEvents: "none",
             }}
@@ -775,16 +775,18 @@ export function FloatingFormulaButton() {
         <button
           onClick={() => setOpen(true)}
           style={{
-            background: "var(--primary)",
+            background: "linear-gradient(135deg, rgba(0,67,70,0.82) 0%, rgba(120,108,185,0.72) 100%)",
+            backdropFilter: "blur(20px) saturate(1.6)",
+            WebkitBackdropFilter: "blur(20px) saturate(1.6)",
             color: "white",
-            border: "none",
+            border: "1px solid rgba(255,255,255,0.28)",
             borderRadius: 999,
             padding: "14px 22px",
             display: "flex",
             alignItems: "center",
             gap: 10,
             cursor: "pointer",
-            boxShadow: "0 8px 32px rgba(0,67,70,0.35)",
+            boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.35), 0 8px 32px rgba(0,50,55,0.30), 0 2px 12px rgba(120,108,185,0.20)",
             fontFamily: "var(--font-body)",
             fontSize: 13,
             fontWeight: 500,

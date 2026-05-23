@@ -22,6 +22,9 @@
   --lift:            #74B3CE;
   --dark:            #172A3A;
   --gold:            #C4965A;
+  --accent-lavender: #9B8FC6;
+  --accent-lavender-soft: #C8C0E4;
+  --glow-lavender:   rgba(155,143,198,0.15);
 
   --border-subtle:   rgba(0, 67, 70, 0.10);
   --border-active:   rgba(0, 67, 70, 0.35);

@@ -74,7 +74,7 @@ export default function HeroSection() {
         display: "flex",
         alignItems: "center",
         background:
-          "radial-gradient(ellipse 120% 90% at 60% 30%, #B8E8EE 0%, #D6F0F4 30%, #EAF6F8 55%, #F0FAFA 75%, #E8F2F5 100%)",
+          "radial-gradient(ellipse 55% 45% at 8% 88%, rgba(155,143,198,0.22) 0%, transparent 65%), radial-gradient(ellipse 120% 90% at 60% 30%, #B8E8EE 0%, #D6F0F4 30%, #EAF6F8 55%, #F0FAFA 75%, #E8F2F5 100%)",
       }}
     >
       {/* Large bg orbs */}
@@ -110,6 +110,21 @@ export default function HeroSection() {
           translateX: mounted ? mousePos.x * 22 : 0,
           translateY: mounted ? mousePos.y * 14 : 0,
           transition: "transform 1s ease",
+        }}
+      />
+      {/* Lavender bloom — bottom-left */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "0%",
+          left: "-5%",
+          width: 480,
+          height: 480,
+          borderRadius: "50%",
+          background: "rgba(155,143,198,0.16)",
+          filter: "blur(110px)",
+          pointerEvents: "none",
+          animation: "float-b 16s ease-in-out infinite",
         }}
       />
       <motion.div

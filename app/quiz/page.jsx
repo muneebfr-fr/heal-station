@@ -245,7 +245,7 @@ export default function QuizPage() {
           <div style={{ maxWidth: 720, marginInline: "auto", display: "flex", alignItems: "center", gap: 14 }}>
             <div style={{ flex: 1, height: 4, background: "var(--border-subtle)", borderRadius: 2, overflow: "hidden" }}>
               <motion.div
-                style={{ height: "100%", background: "var(--primary)", borderRadius: 2, transformOrigin: "left" }}
+                style={{ height: "100%", background: "linear-gradient(90deg, var(--primary), var(--accent-lavender))", borderRadius: 2, transformOrigin: "left" }}
                 initial={{ width: 0 }}
                 animate={{ width: `${((step + 1) / QUESTIONS.length) * 100}%` }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -275,7 +275,7 @@ export default function QuizPage() {
               </p>
               <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px, 6vw, 58px)", fontWeight: 400, letterSpacing: "-0.025em", lineHeight: 1.05, color: "var(--text-primary)", marginBottom: 24 }}>
                 Deficiency{" "}
-                <em style={{ fontStyle: "italic", color: "var(--mid)" }}>signal assessment</em>
+                <em style={{ fontStyle: "italic", color: "var(--accent-lavender)" }}>signal assessment</em>
               </h1>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: 16, maxWidth: 540 }}>
                 This tool screens for symptom patterns associated with three clinically significant and widely prevalent deficiencies in Pakistan: Magnesium, Vitamin D, and Glutathione depletion.
@@ -312,9 +312,11 @@ export default function QuizPage() {
               <button
                 onClick={() => { setStep(0); scrollTop(); }}
                 style={{
-                  background: "var(--primary)",
+                  background: "linear-gradient(135deg, rgba(0,67,70,0.80) 0%, rgba(120,108,185,0.68) 100%)",
+                  backdropFilter: "blur(20px) saturate(1.6)",
+                  WebkitBackdropFilter: "blur(20px) saturate(1.6)",
                   color: "white",
-                  border: "none",
+                  border: "1px solid rgba(255,255,255,0.28)",
                   borderRadius: 999,
                   padding: "15px 44px",
                   fontFamily: "var(--font-body)",
@@ -322,7 +324,7 @@ export default function QuizPage() {
                   fontWeight: 500,
                   letterSpacing: "0.04em",
                   cursor: "pointer",
-                  boxShadow: "0 4px 20px rgba(0,67,70,0.25)",
+                  boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.35), 0 4px 20px rgba(0,50,55,0.22), 0 2px 10px rgba(120,108,185,0.18)",
                 }}
               >
                 Begin Assessment
