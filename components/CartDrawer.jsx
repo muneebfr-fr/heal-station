@@ -191,14 +191,6 @@ export default function CartDrawer() {
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
-                  <span style={{
-                    position: "absolute", inset: 0, pointerEvents: "none",
-                    background: "linear-gradient(105deg, transparent 28%, rgba(255,255,255,0.52) 50%, transparent 72%)",
-                    backgroundSize: "200% 100%",
-                    backgroundPosition: "-200% 0",
-                    animation: "glass-shimmer 3.2s ease infinite",
-                    borderRadius: "inherit",
-                  }} />
                   <span style={{ position: "relative", display: "flex", alignItems: "center", gap: 8 }}>
                     Proceed to Checkout
                     <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">

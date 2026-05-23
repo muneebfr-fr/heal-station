@@ -678,14 +678,6 @@ function ShopCard({ product }) {
               overflow: "hidden",
             }}
           >
-            <span style={{
-              position: "absolute", inset: 0, pointerEvents: "none",
-              background: "linear-gradient(105deg, transparent 28%, rgba(255,255,255,0.5) 50%, transparent 72%)",
-              backgroundSize: "200% 100%",
-              backgroundPosition: "-200% 0",
-              animation: "glass-shimmer 3s ease infinite",
-              borderRadius: "inherit",
-            }} />
             <span style={{ position: "relative", display: "flex", alignItems: "center", gap: 7 }}>
               <WaIcon />
               Order Now
