@@ -1055,18 +1055,23 @@ function FinalCTA() {
           href="/shop"
           style={{
             display: "inline-block",
-            background: "var(--primary)",
-            color: "white",
+            background: "rgba(0,67,70,0.18)",
+            backdropFilter: "blur(20px) saturate(1.7)",
+            WebkitBackdropFilter: "blur(20px) saturate(1.7)",
+            color: "rgba(255,255,255,0.92)",
             borderRadius: 999,
             padding: "14px 38px",
             fontFamily: "var(--font-body)",
             fontSize: 13,
-            fontWeight: 500,
+            fontWeight: 600,
             letterSpacing: "0.04em",
             textDecoration: "none",
-            transition: "all 0.25s ease",
-            boxShadow: "0 4px 20px rgba(0,67,70,0.3)",
+            border: "1px solid rgba(255,255,255,0.32)",
+            boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.40), 0 4px 24px rgba(0,67,70,0.28)",
+            transition: "all 0.22s ease",
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,67,70,0.28)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,67,70,0.18)"; e.currentTarget.style.transform = "translateY(0)"; }}
         >
           Shop All Formulas
         </a>

@@ -177,10 +177,10 @@ export default function Footer() {
               Support
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {["FAQ", "Shipping", "Returns", "Privacy"].map((link) => (
+              {[["FAQ", "/faq"], ["Shipping", "/shipping"], ["Returns", "/returns"], ["Privacy", "/privacy"]].map(([label, href]) => (
                 <Link
-                  key={link}
-                  href="#"
+                  key={label}
+                  href={href}
                   style={{
                     fontFamily: "var(--font-body)",
                     fontSize: 13,
@@ -190,7 +190,7 @@ export default function Footer() {
                   onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(214,243,244,0.95)")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(214,243,244,0.65)")}
                 >
-                  {link}
+                  {label}
                 </Link>
               ))}
             </div>

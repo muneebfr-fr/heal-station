@@ -248,17 +248,23 @@ export default function AboutPage() {
               href="/shop"
               style={{
                 display: "inline-block",
-                background: "var(--primary)",
-                color: "white",
+                background: "rgba(0,67,70,0.18)",
+                backdropFilter: "blur(20px) saturate(1.7)",
+                WebkitBackdropFilter: "blur(20px) saturate(1.7)",
+                color: "rgba(255,255,255,0.92)",
                 borderRadius: 999,
                 padding: "13px 32px",
                 fontFamily: "var(--font-body)",
                 fontSize: 13,
-                fontWeight: 500,
+                fontWeight: 600,
                 letterSpacing: "0.04em",
                 textDecoration: "none",
-                boxShadow: "0 4px 20px rgba(0,67,70,0.28)",
+                border: "1px solid rgba(255,255,255,0.32)",
+                boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.40), 0 4px 24px rgba(0,67,70,0.28)",
+                transition: "all 0.22s ease",
               }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,67,70,0.28)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,67,70,0.18)"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
               Shop All Formulas
             </a>
@@ -266,17 +272,23 @@ export default function AboutPage() {
               href="/science"
               style={{
                 display: "inline-block",
-                background: "transparent",
-                color: "var(--primary)",
+                background: "rgba(255,255,255,0.10)",
+                backdropFilter: "blur(20px) saturate(1.6)",
+                WebkitBackdropFilter: "blur(20px) saturate(1.6)",
+                color: "rgba(255,255,255,0.80)",
                 borderRadius: 999,
-                padding: "12px 30px",
+                padding: "13px 30px",
                 fontFamily: "var(--font-body)",
                 fontSize: 13,
                 fontWeight: 500,
                 letterSpacing: "0.03em",
                 textDecoration: "none",
-                border: "1.5px solid var(--border-active)",
+                border: "1px solid rgba(255,255,255,0.25)",
+                boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.30)",
+                transition: "all 0.22s ease",
               }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.18)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.10)"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
               Read the Science
             </a>
