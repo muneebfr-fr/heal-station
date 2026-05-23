@@ -6,6 +6,13 @@ import { PRODUCTS } from "@/data/products";
 import { GlassEffect } from "@/components/ui/liquid-glass";
 import Link from "next/link";
 
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 const ALL_GOALS = [
   { label: "All", value: "all" },
   { label: "Sleep & Recovery", value: "Sleep" },
@@ -653,21 +660,36 @@ function ShopCard({ product }) {
               display: "inline-flex",
               alignItems: "center",
               gap: 7,
-              background: hovered ? "#1DA851" : product.colorDark,
-              color: "white",
+              position: "relative",
+              background: hovered ? "rgba(0,155,58,0.18)" : hexToRgba(product.colorDark, 0.12),
+              backdropFilter: "blur(18px) saturate(1.6)",
+              WebkitBackdropFilter: "blur(18px) saturate(1.6)",
+              color: hovered ? "#004d1c" : product.colorDark,
+              border: "1px solid rgba(255,255,255,0.46)",
               borderRadius: 999,
               padding: "10px 20px",
               fontFamily: "var(--font-body)",
               fontSize: 12,
-              fontWeight: 500,
+              fontWeight: 600,
               textDecoration: "none",
               transition: "all 0.25s ease",
               letterSpacing: "0.03em",
-              boxShadow: hovered ? "0 6px 18px rgba(29,168,81,0.3)" : "none",
+              boxShadow: `inset 0 1.5px 0 rgba(255,255,255,0.65), inset 0 -1px 0 ${hexToRgba(product.colorDark, 0.08)}, 0 3px 14px ${hexToRgba(product.colorDark, 0.13)}`,
+              overflow: "hidden",
             }}
           >
-            <WaIcon />
-            Order Now
+            <span style={{
+              position: "absolute", inset: 0, pointerEvents: "none",
+              background: "linear-gradient(105deg, transparent 28%, rgba(255,255,255,0.5) 50%, transparent 72%)",
+              backgroundSize: "200% 100%",
+              backgroundPosition: "-200% 0",
+              animation: "glass-shimmer 3s ease infinite",
+              borderRadius: "inherit",
+            }} />
+            <span style={{ position: "relative", display: "flex", alignItems: "center", gap: 7 }}>
+              <WaIcon />
+              Order Now
+            </span>
           </a>
         </div>
       </div>

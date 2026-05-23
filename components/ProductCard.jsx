@@ -6,6 +6,13 @@ import { GlassEffect } from "@/components/ui/liquid-glass";
 import { useCart } from "@/context/CartContext";
 import { useLang } from "@/context/LanguageContext";
 
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 export default function ProductCard({ product, onViewDetails }) {
   const [hovered, setHovered] = useState(false);
   const [tapped, setTapped] = useState(false);
@@ -331,38 +338,55 @@ export default function ProductCard({ product, onViewDetails }) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 7,
-                background: added ? `${product.colorDark}cc` : product.colorDark,
-                color: "white",
-                border: "none",
+                position: "relative",
+                background: added
+                  ? hexToRgba(product.colorDark, 0.22)
+                  : hexToRgba(product.colorDark, 0.12),
+                backdropFilter: "blur(18px) saturate(1.6)",
+                WebkitBackdropFilter: "blur(18px) saturate(1.6)",
+                color: product.colorDark,
+                border: "1px solid rgba(255,255,255,0.48)",
                 borderRadius: 999,
-                padding: "10px 20px",
+                padding: "9px 18px",
                 fontSize: ur ? 13 : 12,
                 fontFamily: ur ? "var(--font-urdu)" : "var(--font-body)",
-                fontWeight: 500,
+                fontWeight: 600,
                 cursor: added ? "default" : "pointer",
-                transition: "all 0.28s ease",
+                transition: "all 0.26s ease",
                 letterSpacing: ur ? 0 : "0.03em",
                 flexShrink: 0,
                 direction: ur ? "rtl" : "ltr",
+                boxShadow: `inset 0 1.5px 0 rgba(255,255,255,0.65), inset 0 -1px 0 ${hexToRgba(product.colorDark, 0.08)}, 0 3px 14px ${hexToRgba(product.colorDark, 0.14)}`,
+                overflow: "hidden",
               }}
             >
-              {added ? (
-                <>
-                  <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                  {ur ? "شامل ہو گیا" : "Added"}
-                </>
-              ) : (
-                <>
-                  <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <path d="M16 10a4 4 0 01-8 0" />
-                  </svg>
-                  {ur ? "کارٹ میں شامل کریں" : "Add to Cart"}
-                </>
-              )}
+              <span style={{
+                position: "absolute", inset: 0, pointerEvents: "none",
+                background: "linear-gradient(105deg, transparent 28%, rgba(255,255,255,0.5) 50%, transparent 72%)",
+                backgroundSize: "200% 100%",
+                backgroundPosition: "-200% 0",
+                animation: "glass-shimmer 3s ease infinite",
+                borderRadius: "inherit",
+              }} />
+              <span style={{ position: "relative", display: "flex", alignItems: "center", gap: 7 }}>
+                {added ? (
+                  <>
+                    <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                    {ur ? "شامل ہو گیا" : "Added"}
+                  </>
+                ) : (
+                  <>
+                    <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                      <line x1="3" y1="6" x2="21" y2="6" />
+                      <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    {ur ? "کارٹ میں شامل کریں" : "Add to Cart"}
+                  </>
+                )}
+              </span>
             </button>
           </div>
 
@@ -378,17 +402,26 @@ export default function ProductCard({ product, onViewDetails }) {
               >
                 <div
                   style={{
-                    background: `${product.colorAccent}50`,
-                    border: `1px solid ${product.colorDark}22`,
+                    background: "rgba(255,255,255,0.28)",
+                    backdropFilter: "blur(20px) saturate(1.6)",
+                    WebkitBackdropFilter: "blur(20px) saturate(1.6)",
+                    border: "1px solid rgba(255,255,255,0.46)",
                     borderRadius: 14,
                     padding: "12px 14px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                     gap: 10,
+                    boxShadow: `inset 0 1.5px 0 rgba(255,255,255,0.65), 0 4px 16px ${hexToRgba(product.colorDark, 0.08)}`,
+                    position: "relative",
+                    overflow: "hidden",
                   }}
                 >
-                  <div>
+                  <div style={{
+                    position: "absolute", inset: 0, pointerEvents: "none",
+                    background: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, transparent 60%)",
+                  }} />
+                  <div style={{ position: "relative" }}>
                     <p style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "var(--text-secondary)", marginBottom: 1 }}>
                       Ready to place your order?
                     </p>
@@ -396,7 +429,7 @@ export default function ProductCard({ product, onViewDetails }) {
                       {product.name} · {product.price}
                     </p>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0, position: "relative" }}>
                     <a
                       href={waUrl}
                       target="_blank"
@@ -406,16 +439,19 @@ export default function ProductCard({ product, onViewDetails }) {
                         display: "inline-flex",
                         alignItems: "center",
                         gap: 6,
-                        background: "#1DA851",
-                        color: "white",
+                        background: "rgba(0,155,58,0.14)",
+                        backdropFilter: "blur(16px) saturate(1.5)",
+                        WebkitBackdropFilter: "blur(16px) saturate(1.5)",
+                        color: "#004d1c",
+                        border: "1px solid rgba(255,255,255,0.45)",
                         borderRadius: 999,
                         padding: "8px 14px",
                         fontSize: 11,
                         fontFamily: "var(--font-body)",
-                        fontWeight: 500,
+                        fontWeight: 600,
                         textDecoration: "none",
                         letterSpacing: "0.03em",
-                        boxShadow: "0 4px 14px rgba(29,168,81,0.3)",
+                        boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.65), 0 3px 12px rgba(0,120,45,0.14)",
                         whiteSpace: "nowrap",
                       }}
                     >
@@ -425,17 +461,14 @@ export default function ProductCard({ product, onViewDetails }) {
                     <button
                       onClick={(e) => { e.stopPropagation(); setAdded(false); }}
                       style={{
-                        width: 26,
-                        height: 26,
-                        borderRadius: "50%",
-                        background: `${product.colorDark}18`,
-                        border: "none",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "pointer",
-                        color: "var(--text-muted)",
-                        flexShrink: 0,
+                        width: 26, height: 26, borderRadius: "50%",
+                        background: "rgba(255,255,255,0.32)",
+                        backdropFilter: "blur(12px)",
+                        WebkitBackdropFilter: "blur(12px)",
+                        border: "1px solid rgba(255,255,255,0.42)",
+                        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        cursor: "pointer", color: "var(--text-muted)", flexShrink: 0,
                       }}
                     >
                       <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
