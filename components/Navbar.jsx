@@ -15,8 +15,8 @@ export default function Navbar() {
   const ur = lang === "ur";
 
   const NAV_LINKS = ur
-    ? [{ label: "دکان", href: "/shop" }, { label: "سائنس", href: "/science" }, { label: "ہمارے بارے میں", href: "/about" }]
-    : [{ label: "Shop", href: "/shop" }, { label: "Science", href: "/science" }, { label: "About", href: "/about" }];
+    ? [{ label: "دکان", href: "/shop" }, { label: "سائنس", href: "/science" }, { label: "کوئز", href: "/quiz" }, { label: "ہمارے بارے میں", href: "/about" }]
+    : [{ label: "Shop", href: "/shop" }, { label: "Science", href: "/science" }, { label: "Quiz", href: "/quiz" }, { label: "About", href: "/about" }];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
