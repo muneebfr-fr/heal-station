@@ -4,13 +4,16 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassEffect } from "@/components/ui/liquid-glass";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LanguageContext";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onViewDetails }) {
   const [hovered, setHovered] = useState(false);
   const [tapped, setTapped] = useState(false);
   const [added, setAdded] = useState(false);
   const showGlass = hovered || tapped;
   const { addItem } = useCart();
+  const { lang } = useLang();
+  const ur = lang === "ur";
 
   const waMessage = encodeURIComponent(
     `Hi! I'd like to order ${product.name} (${product.price}). Please confirm availability.`
@@ -103,19 +106,20 @@ export default function ProductCard({ product }) {
               flexWrap: "wrap",
             }}
           >
-            {product.tags.map((tag) => (
+            {(ur ? product.tagsUr : product.tags).map((tag) => (
               <span
                 key={tag}
                 style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 9,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
+                  fontFamily: ur ? "var(--font-urdu)" : "var(--font-mono)",
+                  fontSize: ur ? 10 : 9,
+                  letterSpacing: ur ? 0 : "0.12em",
+                  textTransform: ur ? "none" : "uppercase",
                   background: `${product.colorDark}18`,
                   color: product.colorDark,
                   padding: "4px 10px",
                   borderRadius: 999,
                   border: `1px solid ${product.colorDark}22`,
+                  direction: ur ? "rtl" : "ltr",
                 }}
               >
                 {tag}
@@ -224,26 +228,31 @@ export default function ProductCard({ product }) {
           <div style={{ marginBottom: 10 }}>
             <h3
               style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(20px, 2.5vw, 24px)",
-                fontWeight: 500,
+                fontFamily: ur ? "var(--font-urdu)" : "var(--font-display)",
+                fontSize: ur ? "clamp(18px, 2.5vw, 22px)" : "clamp(20px, 2.5vw, 24px)",
+                fontWeight: ur ? 600 : 500,
                 color: "var(--text-primary)",
                 marginBottom: 4,
-                letterSpacing: "-0.01em",
+                letterSpacing: ur ? 0 : "-0.01em",
+                direction: ur ? "rtl" : "ltr",
+                textAlign: ur ? "right" : "left",
+                lineHeight: ur ? 1.6 : 1.2,
               }}
             >
-              {product.name}
+              {ur ? product.nameUr : product.name}
             </h3>
             <p
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 10,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
+                fontFamily: ur ? "var(--font-urdu)" : "var(--font-mono)",
+                fontSize: ur ? 12 : 10,
+                letterSpacing: ur ? 0 : "0.14em",
+                textTransform: ur ? "none" : "uppercase",
                 color: product.color,
+                direction: ur ? "rtl" : "ltr",
+                textAlign: ur ? "right" : "left",
               }}
             >
-              {product.subtitle}
+              {ur ? product.subtitleUr : product.subtitle}
             </p>
           </div>
 
@@ -327,13 +336,14 @@ export default function ProductCard({ product }) {
                 border: "none",
                 borderRadius: 999,
                 padding: "10px 20px",
-                fontSize: 12,
-                fontFamily: "var(--font-body)",
+                fontSize: ur ? 13 : 12,
+                fontFamily: ur ? "var(--font-urdu)" : "var(--font-body)",
                 fontWeight: 500,
                 cursor: added ? "default" : "pointer",
                 transition: "all 0.28s ease",
-                letterSpacing: "0.03em",
+                letterSpacing: ur ? 0 : "0.03em",
                 flexShrink: 0,
+                direction: ur ? "rtl" : "ltr",
               }}
             >
               {added ? (
@@ -341,7 +351,7 @@ export default function ProductCard({ product }) {
                   <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
-                  Added
+                  {ur ? "شامل ہو گیا" : "Added"}
                 </>
               ) : (
                 <>
@@ -350,7 +360,7 @@ export default function ProductCard({ product }) {
                     <line x1="3" y1="6" x2="21" y2="6" />
                     <path d="M16 10a4 4 0 01-8 0" />
                   </svg>
-                  Add to Cart
+                  {ur ? "کارٹ میں شامل کریں" : "Add to Cart"}
                 </>
               )}
             </button>
@@ -437,6 +447,38 @@ export default function ProductCard({ product }) {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* View Full Details link */}
+          {onViewDetails && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onViewDetails(); }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 5,
+                width: "100%",
+                marginTop: 12,
+                padding: "8px 0",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                fontFamily: ur ? "var(--font-urdu)" : "var(--font-body)",
+                fontSize: ur ? 13 : 11,
+                color: "var(--text-muted)",
+                letterSpacing: ur ? 0 : "0.06em",
+                direction: ur ? "rtl" : "ltr",
+                transition: "color 0.2s ease",
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = product.colorDark}
+              onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-muted)"}
+            >
+              {ur ? "مکمل تفصیلات دیکھیں" : "View full details"}
+              <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ transform: ur ? "rotate(180deg)" : "none" }}>
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     </motion.div>

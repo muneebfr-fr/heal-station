@@ -5,11 +5,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LanguageContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { count, setIsOpen } = useCart();
+  const { lang, setLang } = useLang();
+  const ur = lang === "ur";
+
+  const NAV_LINKS = ur
+    ? [{ label: "دکان", href: "/shop" }, { label: "سائنس", href: "/science" }, { label: "ہمارے بارے میں", href: "/about" }]
+    : [{ label: "Shop", href: "/shop" }, { label: "Science", href: "/science" }, { label: "About", href: "/about" }];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -57,25 +64,58 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hide-mobile" style={{ display: "flex", gap: 40 }}>
-            {["Shop", "Science", "About"].map((link) => (
+          <nav className="hide-mobile" style={{ display: "flex", gap: 40, alignItems: "center" }}>
+            {NAV_LINKS.map((link) => (
               <Link
-                key={link}
-                href={`/${link.toLowerCase()}`}
+                key={link.href}
+                href={link.href}
                 style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: 13,
+                  fontFamily: ur ? "var(--font-urdu)" : "var(--font-body)",
+                  fontSize: ur ? 15 : 13,
                   fontWeight: 500,
                   color: "var(--text-secondary)",
-                  letterSpacing: "0.04em",
+                  letterSpacing: ur ? 0 : "0.04em",
                   position: "relative",
                   paddingBottom: 2,
                 }}
                 className="nav-link"
               >
-                {link}
+                {link.label}
               </Link>
             ))}
+            {/* Language toggle */}
+            <button
+              onClick={() => setLang(ur ? "en" : "ur")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0,
+                background: "var(--bg-elevated)",
+                border: "1px solid var(--border-subtle)",
+                borderRadius: 999,
+                overflow: "hidden",
+                cursor: "pointer",
+                padding: 0,
+              }}
+            >
+              {["en", "ur"].map((l) => (
+                <span
+                  key={l}
+                  style={{
+                    padding: "5px 11px",
+                    fontFamily: l === "ur" ? "var(--font-urdu)" : "var(--font-mono)",
+                    fontSize: l === "ur" ? 12 : 9,
+                    letterSpacing: l === "ur" ? 0 : "0.1em",
+                    color: lang === l ? "white" : "var(--text-muted)",
+                    background: lang === l ? "var(--primary)" : "transparent",
+                    transition: "all 0.2s ease",
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {l === "en" ? "EN" : "اردو"}
+                </span>
+              ))}
+            </button>
           </nav>
 
           {/* Right side */}
@@ -177,30 +217,66 @@ export default function Navbar() {
               gap: 8,
             }}
           >
-            {["Shop", "Science", "About"].map((link, i) => (
+            {NAV_LINKS.map((link, i) => (
               <motion.div
-                key={link}
+                key={link.href}
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
                 <Link
-                  href={`/${link.toLowerCase()}`}
+                  href={link.href}
                   onClick={() => setMenuOpen(false)}
                   style={{
                     display: "block",
                     padding: "12px 0",
-                    fontFamily: "var(--font-display)",
-                    fontSize: 22,
-                    fontWeight: 400,
+                    fontFamily: ur ? "var(--font-urdu)" : "var(--font-display)",
+                    fontSize: ur ? 18 : 22,
+                    fontWeight: ur ? 600 : 400,
                     color: "var(--text-primary)",
                     borderBottom: "1px solid var(--border-subtle)",
+                    direction: ur ? "rtl" : "ltr",
+                    textAlign: ur ? "right" : "left",
                   }}
                 >
-                  {link}
+                  {link.label}
                 </Link>
               </motion.div>
             ))}
+            {/* Language toggle in mobile menu */}
+            <div style={{ paddingTop: 8 }}>
+              <button
+                onClick={() => setLang(ur ? "en" : "ur")}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 0,
+                  background: "var(--bg-elevated)",
+                  border: "1px solid var(--border-subtle)",
+                  borderRadius: 999,
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  padding: 0,
+                }}
+              >
+                {["en", "ur"].map((l) => (
+                  <span
+                    key={l}
+                    style={{
+                      padding: "7px 16px",
+                      fontFamily: l === "ur" ? "var(--font-urdu)" : "var(--font-mono)",
+                      fontSize: l === "ur" ? 13 : 10,
+                      letterSpacing: l === "ur" ? 0 : "0.1em",
+                      color: lang === l ? "white" : "var(--text-muted)",
+                      background: lang === l ? "var(--primary)" : "transparent",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    {l === "en" ? "EN" : "اردو"}
+                  </span>
+                ))}
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

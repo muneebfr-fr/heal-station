@@ -1,5 +1,6 @@
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
@@ -32,13 +33,15 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <GlassFilter />
-        <CartProvider>
-          <Navbar />
-          <main style={{ paddingTop: "var(--navbar-h)" }}>{children}</main>
-          <Footer />
-          <CartDrawer />
-          <FloatingFormulaButton />
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <Navbar />
+            <main style={{ paddingTop: "var(--navbar-h)" }}>{children}</main>
+            <Footer />
+            <CartDrawer />
+            <FloatingFormulaButton />
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
