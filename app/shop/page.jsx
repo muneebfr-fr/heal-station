@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PRODUCTS } from "@/data/products";
 import { GlassEffect } from "@/components/ui/liquid-glass";
 import Link from "next/link";
+import SchemaScript from "@/components/SchemaScript";
+import { productSchema, breadcrumbSchema } from "@/lib/schema";
 
 function hexToRgba(hex, alpha) {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -48,6 +50,11 @@ export default function ShopPage() {
 
   return (
     <div style={{ background: "var(--bg-base)", minHeight: "100vh" }}>
+      {/* Schema markup */}
+      <SchemaScript schema={breadcrumbSchema([{ name: "Home", href: "/" }, { name: "Shop", href: "/shop" }])} />
+      {PRODUCTS.map((p) => (
+        <SchemaScript key={p.slug} schema={productSchema(p)} />
+      ))}
       {/* Hero band */}
       <div
         style={{

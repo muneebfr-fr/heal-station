@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SchemaScript from "@/components/SchemaScript";
+import { faqSchema, breadcrumbSchema } from "@/lib/schema";
 
 const glassCard = {
   background: "rgba(255,255,255,0.38)",
@@ -85,6 +87,9 @@ function ChevronIcon({ open }) {
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState(null);
 
+  // Flatten all Q&A pairs for schema
+  const allFaqItems = sections.flatMap((s) => s.items);
+
   let globalIndex = -1;
 
   return (
@@ -96,6 +101,10 @@ export default function FAQPage() {
         paddingBottom: "clamp(56px,10vw,120px)",
       }}
     >
+      {/* Schema markup */}
+      <SchemaScript schema={faqSchema(allFaqItems)} />
+      <SchemaScript schema={breadcrumbSchema([{ name: "Home", href: "/" }, { name: "FAQ", href: "/faq" }])} />
+
       {/* Hero */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
